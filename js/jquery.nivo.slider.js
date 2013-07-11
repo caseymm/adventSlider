@@ -11,6 +11,8 @@
     var NivoSlider = function(element, options){
         // Defaults are below
         var settings = $.extend({}, $.fn.nivoSlider.defaults, options);
+	
+	
 
         // Useful variables. Play carefully.
         var vars = {
@@ -652,7 +654,7 @@
         manualAdvance: true,
         prevText: 'Prev',
         nextText: 'Next',
-        randomStart: true,
+        randomStart: false,
         beforeChange: function(){},
         afterChange: function(){},
         slideshowEnd: function(){},

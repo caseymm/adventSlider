@@ -18,11 +18,12 @@
 .out{
     position:absolute;
     z-index: 1000;
-    margin-top:280px;
+    /*margin-top:280px;*/
     background-color:#fff;
     padding: 0px 10px 0px 10px;font-size: 14px;
     line-height: 16px;
-    min-width: 256px;
+    width: 580px;
+    height: 400px;
 }
 
 #img1block{
@@ -40,6 +41,11 @@
 .pop{
     position:absolute;
     z-index:1000;
+}
+
+.right{
+    width:50%;
+    float:right;
 }
 
 

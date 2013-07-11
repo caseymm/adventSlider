@@ -25,8 +25,6 @@
     <script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
     <!--end slider links -->
     
-    <!--blockUI -->
-    <script type="text/javascript" src="js/block.js"></script>
 
     <title>Image Grid</title>
     
@@ -50,10 +48,10 @@
             
             var d = new Date();
             var n = d.getDate();
-            var render = (31-n);
+            var render = (30-n);
                 for (var i=0;i<render;i++){
                     console.log('loop');
-                $('<li><a href="#"><img src="img/black.png" /><div><h3>Block</h3></div></a></li>').appendTo('#blockOut');
+                $('<li><a><img src="img/black.png" /></a></li>').appendTo('#blockOut');
                 };
             
 		$.ajax({
@@ -65,8 +63,11 @@
 	});
 	
 	function parseRunners(xml) {
+            
+            var d = new Date();
+            var n = d.getDate();
 		
-	$(xml).find("person").each(function(){
+	$(xml).find("person").slice(0,n).each(function(){
 		
 		gridID = $(this).attr("id");
 		name = $(this).find("name").text();
@@ -110,14 +111,7 @@
                        });
                         $( '#slider' ).nivoSlider();
 			 $('#slider').hide();
-                        
-                        $('#img1').ready(function() { 
-                            $.blockUI({ message: null }); 
- 
-                            setTimeout($.unblockUI, 100);
-                        });
-                        
-                        
+
 		});
 		
 		//make image grid click to open lightbox

@@ -633,6 +633,9 @@
         });
     };
     
+    var d = new Date();
+    var n = d.getDate();
+    
     //Default settings
     $.fn.nivoSlider.defaults = {
         effect: 'fold',
@@ -641,7 +644,7 @@
         boxRows: 4,
         animSpeed: 0,
         pauseTime: 3000,
-        startSlide: 0,
+        startSlide: n,
         directionNav: true,
         controlNav: true,
         controlNavThumbs: false,

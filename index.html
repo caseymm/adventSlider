@@ -44,9 +44,18 @@
 	var slideSpot;
 	var firstPos;
         var num;
-	//var buildHTML;
+	
 	
 	$(document).ready(function() {
+            
+            var d = new Date();
+            var n = d.getDate();
+            var render = (31-n);
+                for (var i=0;i<render;i++){
+                    console.log('loop');
+                $('<li><a href="#"><img src="img/black.png" /><div><h3>Block</h3></div></a></li>').appendTo('#blockOut');
+                };
+            
 		$.ajax({
 		  type: "GET",
 		  url: "data/runners.xml",
@@ -78,6 +87,8 @@
 		
 			
 		$('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
+                
+                
 		
 		
 		
@@ -105,6 +116,8 @@
  
                             setTimeout($.unblockUI, 100);
                         });
+                        
+                        
 		});
 		
 		//make image grid click to open lightbox
@@ -121,6 +134,7 @@
 			$('#slider').hide();
 			$('#hiddenLayer').hide();
 		});
+                
 });
 	
 	};
@@ -139,6 +153,12 @@
 			<!--This is where the images get rendered -->
                         
 			</ul>
+                
+                <ul class="cbp-rfgrid2">
+                    <div id="blockOut" >
+			<!--This is where the images get rendered -->
+                    </div>   
+			</ul>
                              
 			
 			<!--slider info-->
@@ -155,19 +175,7 @@
 			
 			</div>
     </div>
-    <div class="span12">
-             <div class="moveUp">   
-                <ul class="cbp-rfgrid2">	
-			<li><a href="#"><img src="img/black.png" /><div><h3>Block</h3></div></a></li>
-                        <li><a href="#"><img src="img/black.png" /><div><h3>Block</h3></div></a></li>
-                        <li><a href="#"><img src="img/black.png" /><div><h3>Block</h3></div></a></li>
-                        <li><a href="#"><img src="img/black.png" /><div><h3>Block</h3></div></a></li>
-                        <li><a href="#"><img src="img/black.png" /><div><h3>Block</h3></div></a></li>
-                        
-		</ul>
-            </div>
-    
-</div>
+
 
 
 </div>

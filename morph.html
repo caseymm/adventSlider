@@ -1,23 +1,17 @@
 <!DOCTYPE html>
-
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="stylesheet" href="css/bootstrap-responsive.css" />
-    <link rel="stylesheet" href="css/animate.css" />
-    
-    <!--faces-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+     <!--faces-->
     
     <link rel="stylesheet" type="text/css" href="css/gridDefault.css" />
     <link rel="stylesheet" type="text/css" href="css/gridComponent.css" />
     <script src="js/modernizr.custom.js"></script>
     <script src="js/jquery1.10.1.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    
 		
     <!--slider links -->
     <link rel="stylesheet" href="css/default/nivoDefault.css" type="text/css" media="screen" />
@@ -25,85 +19,112 @@
     <script type="text/javascript" src="js/jquery.nivo.slider.js"></script>
     <!--end slider links -->
     
+    <link rel="stylesheet" href="http://host.coxmediagroup.com/ajc/digitalprojects/global/css/iFrame_Medley.css" type="text/css"/>
+
+    <!--<script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>-->
+    <script src="http://alt.coxnewsweb.com/ajc/_newsapps/libraries/utility/tabletop/tabletop.js" type="text/javascript"></script>
+    
+    <!--<script type="text/javascript" src="js/bootstrap.js"></script>-->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/bootstrap-responsive.css" />
+    <link rel="stylesheet" href="css/animate.css" />
+    
+   
+    
 
     <title>Image Grid</title>
+
+<script type="text/javascript">
     
-    <script type="text/javascript">
-	var gridID;
+        var gridID;
 	var name;
-	var from;
-	var yearsRun;
-	var age;
-	var outfit;
 	var slideID;
 	var imgSrc;
 	var lilImg;
 	var bigImg;
-	var slideSpot;
-	var firstPos;
         var num;
-	
-	
-	$(document).ready(function() {
-            
+
+$(document).ready(function() {
+        
+        
+        //Addpends the correct number of black boxes to the grid    
             var d = new Date();
             var n = d.getDate();
             var render = (30-n);
             //var dateDisplay = (n++);
                 for (var i=0;i<render;i++){
                     console.log('loop');
-                //$('<li><a><img src="img/black.png" /><div><h3>' + dateDisplay + '</h3></div></a></li>').appendTo('#blockOut');
+                
                 $('<li><a><img src="img/black.png" /></a></li>').appendTo('#blockOut');
                 };
             
-		$.ajax({
-		  type: "GET",
-		  url: "data/runners.xml",
-		  dataType: "xml",
-		  success: parseRunners
-		  });
-	});
-	
-	function parseRunners(xml) {
-            
-            var d = new Date();
-            var n = d.getDate();
 		
-	$(xml).find("person").slice(0,n).each(function(){
-		
-		gridID = $(this).attr("id");
-		name = $(this).find("name").text();
-		from = $(this).find("from").text();
-		yearsRun = $(this).find("yrsrun").text();
-		age = $(this).find("age").text();
-		outfit = $(this).find("outfit").text();
+	});    
+    
+var public_spreadsheet_url;
+var url = window.location.toString();
+var query_string = url.split("?");
+window.onload = function() { 
+	public_spreadsheet_url = query_string[2]; 
+	init()
+     
+};
+
+function init() {
+    Tabletop.init( { key: public_spreadsheet_url,
+                     callback: parsePeeps,
+                     simpleSheet: true } )
+}
+
+/*function showInfo(data, tabletop) {
+	parsePeeps(data);
+  }*/
+//var cardWidth= 500;
+
+function parsePeeps(gdata){
+    console.log("parsing");
+	//var d = new Date();
+        //var n = d.getDate();
+	//var myTR = 0;
+	//var myTable = $("#myTable");
+	//var activeTR;
+	$.each(gdata, function (i, gdata){
+		gridID = "img"+i;
+		name = gdata.bigtext;
+		narrative = gdata.content;
+		if(gdata.smalltext !== undefined){
+			smalltext = gdata.smalltext;
+		}
+		else{
+			smalltext = "";
+		}
 		slideID = gridID + "div";
-                jumpID = gridID + "jump";
-                block = gridID + "block";
-                num = parseFloat($(this).find("num").text());
-                
-               
-		imgSrc = $(this).attr("url");
+		imgSrc = gdata.imageurl;
+		//lilImg = '<a href="#"><img class="lilImg" src="' + imgSrc + '" width="120px" height="120px"/></a>';
+		//bigImg = '<img class="bigImg" src="' + imgSrc + '" width="260px" height="260px"/>';
+		//var myTD = "<td><div id='img"+i+"'>"+lilImg+"</div></td>";
+		
+		//goes inside what appends to grid    
 		lilImg = '<a id="#" class="nivoLink" rel="' + num + '"><img src="' + imgSrc + '" width="130px" height="130px"/><div><h3>' + name + '</h3></div></a>';
 		//listItem = '#' + gridID;
 		bigImg = '<img src="' + imgSrc + '" width="260px" height="260px"/>';
 		
-			
+	    //appends the images to resp grid		
 		$('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
                 
                 
 		
 		
-		
+	    //adds content into the loaded slider	
 		$('<a><img src="' + imgSrc + '" data-thumb="' + imgSrc + '" alt=""  /><div id="' + slideID + '"></div></a>').appendTo('.nivoSlider');
-                $('#' +slideID).append('<div class="out border shadow"><div class="right"><h4>'+name+'</h4><p><b>From:</b> '+from+'</p><p><b>Age:</b> '+age+'</p><p><b>Years running the Peachtree:</b> '+yearsRun+'</p><p><b>Why did you choose this outfit?</b></p><p>'+outfit+'</p></div></div>');
+                $('#' +slideID).append('<div class="out border shadow"><div class="right"><h4>'+name+'</h4><p>'+narrative+'</p></div></div>');
                     console.log('append');
                                  
                     
-                
                 $(window).load(function() {
-
-                    $('.nivoLink').live('click', function(e) {
+                        console.log("window load");
+                    $('.nivoLink').on('click', function(e) {
                         e.preventDefault();
                             console.log("how many after default");
                         var targetImage = $(this).attr('rel')-1;
@@ -131,20 +152,18 @@
 			$('#slider').hide();
 			$('#hiddenLayer').hide();
 		});
-                
-});
-	
-	};
-	</script>
-    
-</head>
 
+	});
+
+	
+};//parsePeeps
+</script>
+</head> 
 <body>
-<div class="surround">
+	<div class="surround">
     
 <div id="hiddenLayer" style="z-index:1; position:absolute; top:0px; left:0px; width:100%;height:1500px;display:none;">
-</div>
-           
+</div>       
                 <ul class="cbp-rfgrid">	
 			<!--This is where the images get rendered -->
                         
@@ -155,8 +174,7 @@
 			<!--This is where the images get rendered -->
                     </div>   
 			</ul>
-                             
- 		
+
 			<!--slider info-->
 			<div class="slider-wrapper theme-default">
 				<div id="slider" class="nivoSlider">
@@ -168,14 +186,6 @@
 					</div>
 				
 			<!--end slider info-->
-			
-	
-
-
-
 </div>
-
-
-
 </body>
 </html>

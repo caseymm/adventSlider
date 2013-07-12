@@ -45,14 +45,16 @@
 	
 	
 	$(document).ready(function() {
-            
+        
+        
+        //Addpends the correct number of black boxes to the grid    
             var d = new Date();
             var n = d.getDate();
             var render = (30-n);
             //var dateDisplay = (n++);
                 for (var i=0;i<render;i++){
                     console.log('loop');
-                //$('<li><a><img src="img/black.png" /><div><h3>' + dateDisplay + '</h3></div></a></li>').appendTo('#blockOut');
+                
                 $('<li><a><img src="img/black.png" /></a></li>').appendTo('#blockOut');
                 };
             
@@ -68,7 +70,9 @@
             
             var d = new Date();
             var n = d.getDate();
-		
+            
+	//gets the correct number of objects from the xml file
+        	
 	$(xml).find("person").slice(0,n).each(function(){
 		
 		gridID = $(this).attr("id");
@@ -84,17 +88,19 @@
                 
                
 		imgSrc = $(this).attr("url");
+                
+            //goes inside what appends to grid    
 		lilImg = '<a id="#" class="nivoLink" rel="' + num + '"><img src="' + imgSrc + '" width="130px" height="130px"/><div><h3>' + name + '</h3></div></a>';
 		//listItem = '#' + gridID;
 		bigImg = '<img src="' + imgSrc + '" width="260px" height="260px"/>';
 		
-			
+	    //appends the images to resp grid		
 		$('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
                 
                 
 		
 		
-		
+	    //adds content into the loaded slider	
 		$('<a><img src="' + imgSrc + '" data-thumb="' + imgSrc + '" alt=""  /><div id="' + slideID + '"></div></a>').appendTo('.nivoSlider');
                 $('#' +slideID).append('<div class="out border shadow"><div class="right"><h4>'+name+'</h4><p><b>From:</b> '+from+'</p><p><b>Age:</b> '+age+'</p><p><b>Years running the Peachtree:</b> '+yearsRun+'</p><p><b>Why did you choose this outfit?</b></p><p>'+outfit+'</p></div></div>');
                     console.log('append');

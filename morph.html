@@ -30,7 +30,105 @@
     <link rel="stylesheet" href="css/bootstrap-responsive.css" />
     <link rel="stylesheet" href="css/animate.css" />
     
-   
+<style type="text/css">
+	td {
+		width:120px;
+		height:120px;
+		padding:0;
+		margin:0;
+	}
+	tr{
+		margin-top:0;
+		margin-bottom:0;
+		padding:0;
+	}
+	img {
+		border:none;
+		padding:0;
+		margin:0;
+				vertical-align:middle;
+	}
+	a img {
+		border:none;
+		padding:0;
+		margin:0;
+	}
+	a:hover {
+		text-decoration:none;
+	}
+	a strong{
+		color: #000098;	
+	}
+	.dates{
+		margin-left:5px;
+	}
+	#boxContainer{
+		-moz-box-shadow: 0 0 5px #888;
+		-webkit-box-shadow: 0 0 5px#888;
+		box-shadow: 0 0 5px #888;
+		border: 2px solid #ccc; 
+		-moz-border-radius: 5px; 
+		border-radius: 5px;
+		z-index:100;
+		display:none;
+		width:500px; 
+		height:350px; 
+		background-color:#fff;
+		overflow:hidden;
+		position:absolute; 
+		top:10px; 
+		left:50px;
+		padding-top:20px;
+	}
+	.slideDiv {
+		width:550px;
+		height:420px;
+		display:inline;
+		border:none;
+		position:absolute;
+		list-style-type:none;
+		padding:0;
+		margin:0;
+	}
+	.names {
+		font-size:24px;
+		padding-left:30px;
+		margin-top:15px;
+	}
+	.images {
+		float:left;
+		display:inline;
+		padding:5px;
+		padding-left:30px;
+	}
+	.information {
+		float:left;
+		display:inline;
+		height:300px;
+		width:200px;
+		padding-top:10px;
+	}
+	.bigImg{
+		-moz-box-shadow: 0 0 5px #888;
+		-webkit-box-shadow: 0 0 5px#888;
+		box-shadow: 0 0 5px #888;
+	}
+	#leftHov, #rightHov{
+		position:absolute; top:0px; z-index:100;display:none;
+	}
+	#leftHov{
+		left:0px;
+	}
+	#rightHov{
+		right:0px;
+	}
+	#hiddenLayer{
+		z-index:1; position:absolute; top:0px; left:0px; width:100%;height:100%;display:none;
+	}
+	#portraitList{
+		height:350px;position:absolute;top:0;left:0;margin:0;padding:0;
+	}
+</style> 
     
 
     <title>Image Grid</title>
@@ -80,7 +178,7 @@ function init() {
 /*function showInfo(data, tabletop) {
 	parsePeeps(data);
   }*/
-//var cardWidth= 500;
+var cardWidth= 500;
 
 function parsePeeps(gdata){
     console.log("parsing");
@@ -109,49 +207,65 @@ function parsePeeps(gdata){
 		lilImg = '<a id="#" class="nivoLink" rel="' + num + '"><img src="' + imgSrc + '" width="130px" height="130px"/><div><h3>' + name + '</h3></div></a>';
 		//listItem = '#' + gridID;
 		bigImg = '<img src="' + imgSrc + '" width="260px" height="260px"/>';
-		
+		var spot = i*cardWidth;
+                
 	    //appends the images to resp grid		
 		$('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
                 
                 
 		
-		
-	    //adds content into the loaded slider	
-		$('<a><img src="' + imgSrc + '" data-thumb="' + imgSrc + '" alt=""  /><div id="' + slideID + '"></div></a>').appendTo('.nivoSlider');
-                $('#' +slideID).append('<div class="out border shadow"><div class="right"><h4>'+name+'</h4><p>'+narrative+'</p></div></div>');
-                    console.log('append');
-                                 
-                    
-                $(window).load(function() {
-                        console.log("window load");
-                    $('.nivoLink').on('click', function(e) {
-                        e.preventDefault();
-                            console.log("how many after default");
-                        var targetImage = $(this).attr('rel')-1;
-                        var slideNo=$('.nivoSlider').data('nivo:vars').currentSlide;
-                        if(targetImage!=slideNo) $('.nivo-control').eq(targetImage).trigger('click');
-                        
-                       });
-                        $( '#slider' ).nivoSlider();
-			 //$('#slider').hide();
-                        $('#hiddenLayer').show();
-
-		});
-		
 		//make image grid click to open lightbox
 		$('#'+gridID).click(function(event){
+			$('#boxContainer').show();
+			$('#portraitList').css({'left':'0'});
+			$('#portraitList').animate({'left':'-='+spot},'100');
 			$('#hiddenLayer').show();
-			$('#slider').show();
-                        console.log("click to open");
-
-			
-		});	
-		
+		});		
 		//close lightbox
-		$('#hiddenLayer').click(function(event){
-			$('#slider').hide();
+		$('#closeBtn').click(function(event){
+			$('#portraitList').css({'left':'0'});
+			$('#boxContainer').hide();
 			$('#hiddenLayer').hide();
 		});
+		$('#hiddenLayer').click(function(event){
+			$('#portraitList').css({'left':'0'});
+			$('#boxContainer').hide();
+			$('#hiddenLayer').hide();
+		});
+
+			//fill lightbox with info	
+		var divStuff = '<div id="name'+gridID+'"><span class="names"><strong>'+name+'</strong></span><span class="dates">'+smalltext+'</span></div><div style="width:'+cardWidth+'px;height:280px;display:block;"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><p>'+narrative+'</p></div></div>';
+		document.getElementById("portraitList").innerHTML += '<li id="'+slideID+'" class="slideDiv">'+divStuff+'</li>';	
+		$('#'+slideID).css({'left': spot});
+	});//$.each()
+
+	slideWidth = $(".slideDiv").length*cardWidth;	
+
+	$('#boxContainer').mouseover(function(){
+		$('#leftHov').show();
+		$('#rightHov').show();
+	});
+	$('#boxContainer').mouseout(function(){
+		$('#rightHov').hide(); 
+		$('#leftHov').hide();
+	});	
+		
+	//positioning within lightbox		
+	var portraits = $('#portraitList');
+
+	$("#leftHov").bind("click", function() {
+		if(portraits.position().left < 0){
+    		portraits.animate({"left":"+="+cardWidth}, {
+        		speed: "fast"     
+    		});
+		}	
+	});
+	$("#rightHov").bind("click", function() {
+		if(portraits.position().left > -1*(slideWidth-cardWidth)){
+    		portraits.animate({"left":"-="+cardWidth}, {
+        		speed: "fast"
+    		});
+		}
 
 	});
 
@@ -175,15 +289,14 @@ function parsePeeps(gdata){
                     </div>   
 			</ul>
 
-			<!--slider info-->
-			<div class="slider-wrapper theme-default">
-				<div id="slider" class="nivoSlider">
-					
-				</div>
-				
-				<div class="nivo-html-caption">
-					<!--<div id="block"></div>-->
-					</div>
+			<div id="boxContainer">
+		<div id="leftHov"><a href="#"><img src="img/left.png"/></a></div>
+		<div id="rightHov"><a href="#"><img src="img/right.png"/></a></div>	
+		<ul id="portraitList"></ul>	
+		<div id="closeBtn" style="z-index:500; position:absolute; right:0px; top:320px;width:30px;height:40px;">
+			<a href="#" style="text-decoration:none; color:#000; font-family:'Arial',sanserif;">X</a>
+		</div>	
+	</div>
 				
 			<!--end slider info-->
 </div>

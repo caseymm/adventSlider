@@ -31,17 +31,7 @@
     <link rel="stylesheet" href="css/animate.css" />
     
 <style type="text/css">
-	td {
-		width:120px;
-		height:120px;
-		padding:0;
-		margin:0;
-	}
-	tr{
-		margin-top:0;
-		margin-bottom:0;
-		padding:0;
-	}
+	
 	img {
 		border:none;
 		padding:0;
@@ -150,7 +140,6 @@ $(document).ready(function() {
             var d = new Date();
             var n = d.getDate();
             var render = (30-n);
-            //var dateDisplay = (n++);
                 for (var i=0;i<render;i++){
                     console.log('loop');
                 
@@ -166,7 +155,13 @@ var query_string = url.split("?");
 window.onload = function() { 
 	public_spreadsheet_url = query_string[2]; 
 	init()
-     
+        var d = new Date();
+        var n = d.getDate();
+        var today = (n-1)*cardWidth;
+        $('#boxContainer').show();
+        $('#portraitList').css({'left':'0'});
+	$('#portraitList').animate({'left':'-='+today},'100');
+        $('#hiddenLayer').show();
 };
 
 function init() {
@@ -182,12 +177,12 @@ var cardWidth= 500;
 
 function parsePeeps(gdata){
     console.log("parsing");
-	//var d = new Date();
-        //var n = d.getDate();
-	//var myTR = 0;
-	//var myTable = $("#myTable");
-	//var activeTR;
+	var d = new Date();
+        var n = d.getDate();
+        //for (i=0;i<n;i){
 	$.each(gdata, function (i, gdata){
+            
+            
 		gridID = "img"+i;
 		name = gdata.bigtext;
 		narrative = gdata.content;
@@ -199,20 +194,31 @@ function parsePeeps(gdata){
 		}
 		slideID = gridID + "div";
 		imgSrc = gdata.imageurl;
-		//lilImg = '<a href="#"><img class="lilImg" src="' + imgSrc + '" width="120px" height="120px"/></a>';
-		//bigImg = '<img class="bigImg" src="' + imgSrc + '" width="260px" height="260px"/>';
-		//var myTD = "<td><div id='img"+i+"'>"+lilImg+"</div></td>";
 		
+                
 		//goes inside what appends to grid    
-		lilImg = '<a id="#" class="nivoLink" rel="' + num + '"><img src="' + imgSrc + '" width="130px" height="130px"/><div><h3>' + name + '</h3></div></a>';
+		lilImg = '<a><img src="' + imgSrc + '" width="130px" height="130px"/><div><h3>' + name + '</h3></div></a>';
 		//listItem = '#' + gridID;
 		bigImg = '<img src="' + imgSrc + '" width="260px" height="260px"/>';
 		var spot = i*cardWidth;
                 
+            if (i<n) {
 	    //appends the images to resp grid		
-		$('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
+		//$('<li id=' +liGridID+ '><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
+                $('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
                 
+                	//fill lightbox with info	
+		var divStuff = '<div id="name'+gridID+'"><span class="names"><strong>'+name+'</strong></span><span class="dates">'+smalltext+'</span></div><div style="width:'+cardWidth+'px;height:280px;display:block;"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><p>'+narrative+'</p></div></div>';
+		document.getElementById("portraitList").innerHTML += '<li id="'+slideID+'" class="slideDiv">'+divStuff+'</li>';	
+		$('#'+slideID).css({'left': spot});
+                }else{
+                $('<li style="display:none;"><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
                 
+                	//fill lightbox with info	
+		var divStuff = '<div id="name'+gridID+'" style="visibility:hidden;"><span class="names"><strong>'+name+'</strong></span><span class="dates">'+smalltext+'</span></div><div style="width:'+cardWidth+'px;height:280px;display:block;"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><p>'+narrative+'</p></div></div>';
+		document.getElementById("portraitList").innerHTML += '<li id="'+slideID+'" class="slideDiv" style="visibility:hidden;">'+divStuff+'</li>';	
+		$('#'+slideID).css({'left': spot});  
+                }
 		
 		//make image grid click to open lightbox
 		$('#'+gridID).click(function(event){
@@ -233,14 +239,15 @@ function parsePeeps(gdata){
 			$('#hiddenLayer').hide();
 		});
 
-			//fill lightbox with info	
-		var divStuff = '<div id="name'+gridID+'"><span class="names"><strong>'+name+'</strong></span><span class="dates">'+smalltext+'</span></div><div style="width:'+cardWidth+'px;height:280px;display:block;"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><p>'+narrative+'</p></div></div>';
-		document.getElementById("portraitList").innerHTML += '<li id="'+slideID+'" class="slideDiv">'+divStuff+'</li>';	
-		$('#'+slideID).css({'left': spot});
+		
+            
 	});//$.each()
+        //};
 
 	slideWidth = $(".slideDiv").length*cardWidth;	
 
+	
+        
 	$('#boxContainer').mouseover(function(){
 		$('#leftHov').show();
 		$('#rightHov').show();
@@ -249,7 +256,7 @@ function parsePeeps(gdata){
 		$('#rightHov').hide(); 
 		$('#leftHov').hide();
 	});	
-		
+        
 	//positioning within lightbox		
 	var portraits = $('#portraitList');
 
@@ -268,6 +275,8 @@ function parsePeeps(gdata){
 		}
 
 	});
+        
+        
 
 	
 };//parsePeeps

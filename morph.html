@@ -53,12 +53,12 @@
 		margin-left:5px;
 	}
 	#boxContainer{
-		-moz-box-shadow: 0 0 5px #888;
-		-webkit-box-shadow: 0 0 5px#888;
-		box-shadow: 0 0 5px #888;
-		border: 2px solid #ccc; 
-		-moz-border-radius: 5px; 
-		border-radius: 5px;
+		-webkit-box-shadow:  5px 5px 15px 3px rgba(0, 0, 0, 0.8);
+                -moz-box-shadow:  5px 5px 15px 3px rgba(0, 0, 0, 0.8);
+                box-shadow:  5px 5px 15px 3px rgba(0, 0, 0, 0.8);
+		border: 1px solid #ccc; 
+		-moz-border-radius: 7px; 
+		border-radius: 7px;
 		z-index:100;
 		display:none;
 		width:500px; 
@@ -66,10 +66,15 @@
 		background-color:#fff;
 		overflow:hidden;
 		position:absolute; 
-		top:10px; 
-		left:50px;
+		top:50px; 
+		/*left:50px;*/
 		padding-top:20px;
 	}
+        .center{
+            width:500px;
+            margin:auto;
+            position:relative;
+        }
 	.slideDiv {
 		width:550px;
 		height:420px;
@@ -77,7 +82,7 @@
 		border:none;
 		position:absolute;
 		list-style-type:none;
-		padding:0;
+		padding: 15px 0px 15px 0px;
 		margin:0;
 	}
 	.names {
@@ -96,7 +101,8 @@
 		display:inline;
 		height:300px;
 		width:200px;
-		padding-top:10px;
+		padding-top:0px;
+                padding-right:15px;
 	}
 	.bigImg{
 		-moz-box-shadow: 0 0 5px #888;
@@ -140,12 +146,14 @@ $(document).ready(function() {
             var d = new Date();
             var n = d.getDate();
             var render = (30-n);
-                for (var i=0;i<render;i++){
+            var afterDate;
+               // for (var i=0;i<render;i++){
                     console.log('loop');
-                
-                $('<li><a><img src="img/black.png" /></a></li>').appendTo('#blockOut');
+                    for (afterDate = n+1; afterDate<31;afterDate++) {
+
+                $('<li><a><img src="img/black.png" /><div><h3>' + afterDate + '</h3></div></a></li>').appendTo('#blockOut');
                 };
-            
+           // };
 		
 	});    
     
@@ -179,6 +187,7 @@ function parsePeeps(gdata){
     console.log("parsing");
 	var d = new Date();
         var n = d.getDate();
+        var beforeDate;
         //for (i=0;i<n;i){
 	$.each(gdata, function (i, gdata){
             
@@ -197,7 +206,8 @@ function parsePeeps(gdata){
 		
                 
 		//goes inside what appends to grid    
-		lilImg = '<a><img src="' + imgSrc + '" width="130px" height="130px"/><div><h3>' + name + '</h3></div></a>';
+		lilImg = '<a><img src="' + imgSrc + '" width="130px" height="130px"/><div><h3>' + (i+1) + '</h3></div></a>';
+                
 		//listItem = '#' + gridID;
 		bigImg = '<img src="' + imgSrc + '" width="260px" height="260px"/>';
 		var spot = i*cardWidth;
@@ -244,8 +254,8 @@ function parsePeeps(gdata){
 	});//$.each()
         //};
 
-	slideWidth = $(".slideDiv").length*cardWidth;	
-
+	//slideWidth = $(".slideDiv").length*cardWidth;	
+        slideWidth = n*cardWidth;	
 	
         
 	$('#boxContainer').mouseover(function(){
@@ -298,13 +308,15 @@ function parsePeeps(gdata){
                     </div>   
 			</ul>
 
+                <div class="center">
 			<div id="boxContainer">
 		<div id="leftHov"><a href="#"><img src="img/left.png"/></a></div>
 		<div id="rightHov"><a href="#"><img src="img/right.png"/></a></div>	
 		<ul id="portraitList"></ul>	
 		<div id="closeBtn" style="z-index:500; position:absolute; right:0px; top:320px;width:30px;height:40px;">
 			<a href="#" style="text-decoration:none; color:#000; font-family:'Arial',sanserif;">X</a>
-		</div>	
+		</div>
+                </div>
 	</div>
 				
 			<!--end slider info-->

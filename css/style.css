@@ -48,5 +48,30 @@
     float:right;
 }
 
+.stamp{
+    padding: 24px 2px 0px 0px;
+    font-size: 22px;
+    color: #fff;
+    text-align: center;
+    background-image: url(../img/stampOutline.png);
+    background-size: contain;
+    width: 54px;
+    height: 70px;
+    float: right;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+    margin-top: -315px;
+}
+
+.sponsorLogo{
+    float: right;
+    margin: 0px 0px 0px 0px;
+    max-width:175px;
+}
+
+.text{
+    height: 230px;
+}
+
 
 

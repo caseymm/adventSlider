@@ -50,7 +50,7 @@
 		color: #000098;	
 	}
 	.dates{
-		margin-left:5px;
+		margin-left:31px;
 	}
 	#boxContainer{
 		-webkit-box-shadow:  5px 5px 15px 3px rgba(0, 0, 0, 0.8);
@@ -95,14 +95,20 @@
 		display:inline;
 		padding:5px;
 		padding-left:30px;
+                width:200px;
 	}
 	.information {
-		float:left;
-		display:inline;
-		height:300px;
-		width:200px;
-		padding-top:0px;
-                padding-right:15px;
+		float: left;
+                display: inline;
+                height: 250px;
+                width: 250px;
+                padding-top: 0px;
+                padding-right: 15px;
+                border-left: solid;
+                border-width: 2px;
+                border-color: #C2C2C2;
+                margin-left: 5px;
+                padding-left: 10px;
 	}
 	.bigImg{
 		-moz-box-shadow: 0 0 5px #888;
@@ -203,7 +209,9 @@ function parsePeeps(gdata){
 		}
 		slideID = gridID + "div";
 		imgSrc = gdata.imageurl;
-		
+		logo = gdata.logo;
+                
+                sponsor = '<img src="' + logo + '"/>';
                 
 		//goes inside what appends to grid    
 		lilImg = '<a><img src="' + imgSrc + '" width="130px" height="130px"/><div><h3>' + (i+1) + '</h3></div></a>';
@@ -218,7 +226,7 @@ function parsePeeps(gdata){
                 $('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
                 
                 	//fill lightbox with info	
-		var divStuff = '<div id="name'+gridID+'"><span class="names"><strong>'+name+'</strong></span><span class="dates">'+smalltext+'</span></div><div style="width:'+cardWidth+'px;height:280px;display:block;"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><p>'+narrative+'</p></div></div>';
+		var divStuff = '<div id="name'+gridID+'"><span class="names"><strong>'+name+'</strong></span><div class="dates">'+smalltext+'</div></div><div style="width:'+cardWidth+'px;height:280px;display:block;padding-top:15px;"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><span class="text"><p>'+narrative+'</p></span><span class="sponsorLogo"><p>Sponsored by:</p>'+ sponsor +'</span></div><div class="stamp">' + (i+1) + '</div></div>';
 		document.getElementById("portraitList").innerHTML += '<li id="'+slideID+'" class="slideDiv">'+divStuff+'</li>';	
 		$('#'+slideID).css({'left': spot});
                 }else{

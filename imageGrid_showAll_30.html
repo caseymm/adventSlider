@@ -30,108 +30,6 @@
     <link rel="stylesheet" href="css/bootstrap-responsive.css" />
     <link rel="stylesheet" href="css/animate.css" />
     
-<style type="text/css">
-	
-	img {
-		border:none;
-		padding:0;
-		margin:0;
-				vertical-align:middle;
-	}
-	a img {
-		border:none;
-		padding:0;
-		margin:0;
-	}
-	a:hover {
-		text-decoration:none;
-	}
-	a strong{
-		color: #000098;	
-	}
-	.dates{
-		margin-left:31px;
-	}
-	#boxContainer{
-		-webkit-box-shadow:  5px 5px 15px 3px rgba(0, 0, 0, 0.8);
-                -moz-box-shadow:  5px 5px 15px 3px rgba(0, 0, 0, 0.8);
-                box-shadow:  5px 5px 15px 3px rgba(0, 0, 0, 0.8);
-		border: 1px solid #ccc; 
-		-moz-border-radius: 7px; 
-		border-radius: 7px;
-		z-index:100;
-		display:none;
-		width:500px; 
-		height:350px; 
-		background-color:#fff;
-		overflow:hidden;
-		position:absolute; 
-		top:50px; 
-		/*left:50px;*/
-		padding-top:20px;
-	}
-        .center{
-            width:500px;
-            margin:auto;
-            position:relative;
-        }
-	.slideDiv {
-		width:550px;
-		height:420px;
-		display:inline;
-		border:none;
-		position:absolute;
-		list-style-type:none;
-		padding: 15px 0px 15px 0px;
-		margin:0;
-	}
-	.names {
-		font-size:24px;
-		padding-left:30px;
-		margin-top:15px;
-	}
-	.images {
-		float:left;
-		display:inline;
-		padding:5px;
-		padding-left:30px;
-                width:200px;
-	}
-	.information {
-		float: left;
-                display: inline;
-                height: 250px;
-                width: 250px;
-                padding-top: 0px;
-                padding-right: 15px;
-                border-left: solid;
-                border-width: 2px;
-                border-color: #C2C2C2;
-                margin-left: 5px;
-                padding-left: 10px;
-	}
-	.bigImg{
-		-moz-box-shadow: 0 0 5px #888;
-		-webkit-box-shadow: 0 0 5px#888;
-		box-shadow: 0 0 5px #888;
-	}
-	#leftHov, #rightHov{
-		position:absolute; top:0px; z-index:100;display:none;
-	}
-	#leftHov{
-		left:0px;
-	}
-	#rightHov{
-		right:0px;
-	}
-	#hiddenLayer{
-		z-index:1; position:absolute; top:0px; left:0px; width:100%;height:100%;display:none;
-	}
-	#portraitList{
-		height:350px;position:absolute;top:0;left:0;margin:0;padding:0;
-	}
-</style> 
-    
 
     <title>Image Grid</title>
 
@@ -216,7 +114,7 @@ function parsePeeps(gdata){
                 $('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
                 
                 	//fill lightbox with info	
-		var divStuff = '<div id="name'+gridID+'"><span class="names"><strong>'+name+'</strong></span><div class="dates">'+smalltext+'</div></div><div style="width:'+cardWidth+'px;height:280px;display:block;padding-top:15px;"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><span class="text"><p>'+narrative+'</p></span><span class="sponsorLogo"><p>Sponsored by:</p>'+ sponsor +'</span></div><div class="stamp">' + (i+1) + '</div></div>';
+		var divStuff = '<div id="name'+gridID+'"><span class="names"><strong>'+name+'</strong></span><div class="dates">'+smalltext+'</div></div><div class="resizeWidth"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><span class="text"><p>'+narrative+'</p></span><span class="sponsorLogo"><p>Sponsored by:</p>'+ sponsor +'</span></div><div class="stamp">' + (i+1) + '</div></div>';
 		document.getElementById("portraitList").innerHTML += '<li id="'+slideID+'" class="slideDiv">'+divStuff+'</li>';	
 		$('#'+slideID).css({'left': spot});
                 
@@ -304,7 +202,7 @@ function parsePeeps(gdata){
 		<div id="leftHov"><a href="#"><img src="img/left.png"/></a></div>
 		<div id="rightHov"><a href="#"><img src="img/right.png"/></a></div>	
 		<ul id="portraitList"></ul>	
-		<div id="closeBtn" style="z-index:500; position:absolute; right:0px; top:320px;width:30px;height:40px;">
+		<div id="closeBtn">
 			<a href="#" style="text-decoration:none; color:#000; font-family:'Arial',sanserif;">X</a>
 		</div>
                 </div>

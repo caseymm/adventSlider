@@ -36,6 +36,9 @@
 
 <script type="text/javascript">
     
+    //Calendar Starts on November 25 (329th day of the year)
+    //and ends on December 25 (359th day of the year)
+    
         var gridID;
 	var name;
 	var slideID;
@@ -45,32 +48,16 @@
         var num;
 	var logo;
 	var sponsorURL;
-        var now = new Date();
+        
+        //var now = new Date();
+        var now = new Date("December 1, 2013 06:00:00");
+        //d.setDate(3);
         var start = new Date(now.getFullYear(), 0, 0);
         var diff = now - start;
         var oneDay = 1000 * 60 * 60 * 24;
-        var day = Math.floor(diff / oneDay); 
-
-$(document).ready(function() {
-        
-        
-        //Addpends the correct number of black boxes to the grid    
-            var d = new Date();
-            var n = d.getDate();
-            var render = (242-day);
-            var blackNum = (day-205);
-            var afterDate;
-               // for (var i=0;i<render;i++){
-                    console.log(render);
-                    for (afterDate = blackNum; afterDate<=render;afterDate++) {
-
-        //fix display number            
-                    
-                $('<li><a><img src="img/black.png" /><div><h3>' + afterDate + '</h3></div></a></li>').appendTo('#blockOut');
-                };
-           // };
-		
-	});    
+        var day = Math.floor(diff / oneDay);
+        var endDate = day+1;
+ 
     
 var public_spreadsheet_url;
 var url = window.location.toString();
@@ -78,7 +65,7 @@ var query_string = url.split("?");
 window.onload = function() { 
 	public_spreadsheet_url = query_string[2]; 
 	init()
-        var today = (day-207)*cardWidth;
+        var today = (endDate-330)*cardWidth;
         $('#boxContainer').show();
         $('#portraitList').css({'left':'0'});
 	$('#portraitList').animate({'left':'-='+today},'100');
@@ -98,15 +85,15 @@ var cardWidth= 500;
 
 function parsePeeps(gdata){
     console.log("parsing");
-	var d = new Date();
-        var n = d.getDate();
         var beforeDate;
+        var d = new Date();
+        var n = d.getDate();
         //for (i=0;i<n;i){
 	$.each(gdata, function (i, gdata){
             
             
 		gridID = "img"+i;
-                var setTheDate = 206+i;
+                var setTheDate = 329+i;
 		name = gdata.bigtext;
 		narrative = gdata.content;
 		if(gdata.smalltext !== undefined){
@@ -129,7 +116,7 @@ function parsePeeps(gdata){
 		bigImg = '<img src="' + imgSrc + '" width="260px" height="260px"/>';
 		var spot = i*cardWidth;
                 
-            if (setTheDate<day) {
+            if (setTheDate<endDate) {
 	    //appends the images to resp grid		
 		//$('<li id=' +liGridID+ '><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
                 $('<li><div id="' + gridID + '">' + lilImg + '</div></li>').appendTo('.cbp-rfgrid');
@@ -143,7 +130,7 @@ function parsePeeps(gdata){
                 
                 	//fill lightbox with info	
 		var divStuff = '<div id="name'+gridID+'" style="visibility:hidden;"><span class="names"><strong>'+name+'</strong></span><span class="dates">'+smalltext+'</span></div><<div class="resizeWidth"><div class="images" id="img'+gridID+'">'+bigImg+'</div><div class="information" id="info'+gridID+'"><p>'+narrative+'</p></div></div>';
-		document.getElementById("portraitList").innerHTML += '<li id="'+slideID+'" class="slideDiv" style="visibility:hidden;">'+divStuff+'</li>';	
+		document.getElementById("portraitList").innerHTML += '<li id="'+slideID+'"  style="visibility:hidden;">'+divStuff+'</li>';	
 		$('#'+slideID).css({'left': spot});  
                 }
 		
@@ -168,11 +155,11 @@ function parsePeeps(gdata){
 
 		
             
-	});//$.each()
+	});//end if
         //};
 
-	//slideWidth = $(".slideDiv").length*cardWidth;	
-        slideWidth = n*cardWidth;	
+	slideWidth = $(".slideDiv").length*cardWidth;
+        console.log(slideWidth);
 	
         
 	$('#boxContainer').mouseover(function(){
@@ -204,9 +191,20 @@ function parsePeeps(gdata){
 	});
         
         
-
+blackBoxes();
 	
 };//parsePeeps
+
+function blackBoxes() {
+    var numCounter = ($(".slideDiv").length)+1;
+    console.log(numCounter);
+    for (var afterDate = numCounter; afterDate<=31;afterDate++) {
+
+        //fix display number            
+                    
+                $('<li><a><img src="img/black.png" /><div><h3>' + afterDate + '</h3></div></a></li>').appendTo('#blockOut');
+                };
+};
 </script>
 </head> 
 <body>
